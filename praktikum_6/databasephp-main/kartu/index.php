@@ -1,20 +1,21 @@
 <?php
-require_once 'dbkoneksi.php';
-?>
-<?php
-$sql = "SELECT * FROM produk";
+require_once '../dbkoneksi.php';
+
+
+$sql = "SELECT DISTINCT kartu.*, pelanggan.kartu_id as is_pelanggan
+FROM kartu LEFT JOIN pelanggan ON kartu.id = pelanggan.kartu_id";
 $rs = $dbh->query($sql);
 ?>
 
-<a class="btn btn-success" href="form_produk.php" role="button">Create Produk</a>
+<a class="btn btn-success" href="create.php" role="button">Tambah Kartu</a>
 <table class="table" width="100%" border="1" cellspacing="2" cellpadding="2">
     <thead>
         <tr>
             <th>No</th>
             <th>Kode</th>
             <th>Nama</th>
-            <th>Harga Jual</th>
-            <th>Qty</th>
+            <th>Diskon</th>
+            <th>Iuran</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -27,12 +28,12 @@ $rs = $dbh->query($sql);
                 <td><?= $nomor ?></td>
                 <td><?= $row['kode'] ?></td>
                 <td><?= $row['nama'] ?></td>
-                <td><?= $row['harga_jual'] ?></td>
-                <td><?= $row['stok'] ?></td>
+                <td><?= $row['diskon'] ?></td>
+                <td><?= $row['iuran'] ?></td>
                 <td>
                     <a class="btn btn-primary" href="view_produk.php?id=<?= $row['id'] ?>">View</a>
-                    <a class="btn btn-primary" href="update_produk.php?idedit=<?= $row['id'] ?>">Update</a>
-                    <a class="btn btn-primary" href="delete_produk.php?iddel=<?= $row['id'] ?>" onclick="if(!confirm('Anda Yakin Hapus Data Produk <?= $row['nama'] ?>?')) {return false}">Delete</a>
+                    <a class="btn btn-primary" href="update_kartu.php?idedit=<?= $row['id'] ?>"> Update</a>
+                    <a class="btn btn-primary <?= $row['is_pelanggan'] ? 'disabled' : '' ?>" href="delete.php?iddel=<?= $row['id'] ?>" onclick="if(!confirm('Anda Yakin Hapus Data Pelanggan <?= $row['nama'] ?>?')) {return false}">Delete</a>
                 </td>
             </tr>
         <?php

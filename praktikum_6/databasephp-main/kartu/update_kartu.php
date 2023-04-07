@@ -1,10 +1,10 @@
 <?php
-require_once 'dbkoneksi.php';
+require_once '../dbkoneksi.php';
 
 $_idedit = $_GET['idedit'];
 if (!empty($_idedit)) {
   // edit
-  $sql = "SELECT * FROM produk WHERE id = ?";
+  $sql = "SELECT * FROM kartu WHERE id = ?";
   $st = $dbh->prepare($sql);
   $st->execute([$_idedit]);
   $row = $st->fetch();
@@ -14,7 +14,7 @@ if (!empty($_idedit)) {
 }
 ?>
 
-<form method="POST" action="proses_produk.php">
+<form method="POST" action="proses.php">
   <div class="form-group row">
     <label for="kode" class="col-4 col-form-label">Kode</label>
     <div class="col-8">
@@ -29,7 +29,7 @@ if (!empty($_idedit)) {
     </div>
   </div>
   <div class="form-group row">
-    <label for="nama" class="col-4 col-form-label">Nama Produk</label>
+    <label for="nama" class="col-4 col-form-label">Nama</label>
     <div class="col-8">
       <div class="input-group">
         <div class="input-group-prepend">
@@ -42,7 +42,7 @@ if (!empty($_idedit)) {
     </div>
   </div>
   <div class="form-group row">
-    <label for="harga_beli" class="col-4 col-form-label">Harga Beli</label>
+    <label for="diskon" class="col-4 col-form-label">Diskon</label>
     <div class="col-8">
       <div class="input-group">
         <div class="input-group-prepend">
@@ -50,12 +50,12 @@ if (!empty($_idedit)) {
             <i class="fa fa-arrow-circle-o-left"></i>
           </div>
         </div>
-        <input id="harga_beli" name="harga_beli" value="<?= $row['harga_beli'] ?>" type="text" class="form-control">
+        <input id="diskon" name="diskon" value="<?= $row['diskon'] ?>" type="text" class="form-control">
       </div>
     </div>
   </div>
   <div class="form-group row">
-    <label for="stok" class="col-4 col-form-label">Stok</label>
+    <label for="iuran" class="col-4 col-form-label">Iuran</label>
     <div class="col-8">
       <div class="input-group">
         <div class="input-group-prepend">
@@ -63,46 +63,11 @@ if (!empty($_idedit)) {
             <i class="fa fa-arrow-circle-up"></i>
           </div>
         </div>
-        <input id="stok" name="stok" value="<?= $row['stok'] ?>" type="text" class="form-control">
+        <input id="iuran" name="iuran" value="<?= $row['iuran'] ?>" type="text" class="form-control">
       </div>
     </div>
   </div>
-  <div class="form-group row">
-    <label for="min_stok" class="col-4 col-form-label">Minimum Stok</label>
-    <div class="col-8">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <i class="fa fa-arrow-circle-right"></i>
-          </div>
-        </div>
-        <input id="min_stok" name="min_stok" value="<?= $row['min_stok'] ?>" type="text" class="form-control">
-      </div>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="jenis" class="col-4 col-form-label">Jenis Produk</label>
-    <div class="col-8">
-      <?php
-      $sqljenis = "SELECT * FROM jenis_produk";
-      $rsjenis = $dbh->query($sqljenis);
-      ?>
-      <select id="jenis" name="jenis" class="custom-select">
-        <?php
-        foreach ($rsjenis as $rowjenis) {
-        ?>
-          <option value="<?= $rowjenis['id'] ?>"><?= $rowjenis['nama'] ?></option>
-        <?php
-        }
-        ?>
-        <!--
-        <option value="1">Elektronik</option>
-        <option value="2">Furniture</option>
-        <option value="3">Makanan</option>-->
 
-      </select>
-    </div>
-  </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
       <?php
